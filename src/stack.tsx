@@ -1,6 +1,5 @@
 import { ContainerStyleProps, useContainerStyle } from 'native-x-theme'
-import React from 'react-native'
-import { memo, ReactNode, useMemo } from 'react'
+import React, { memo, ReactNode, useMemo } from 'react'
 import { LayoutChangeEvent, View, ViewStyle } from 'react-native'
 import { styles as s } from 'tachyons-react-native'
 
