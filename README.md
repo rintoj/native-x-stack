@@ -63,8 +63,11 @@ function MyComponent() {
 
 Here is an example of the release type that will be done based on a commit messages:
 
-| Commit message          | Release type          |
-| ----------------------- | --------------------- |
-| fix(pencil): [comment]  | Patch Release         |
-| feat(pencil): [comment] | Minor Feature Release |
-| perf(pencil): [comment] | Major Feature Release |
+| Commit message      | Release type          |
+| ------------------- | --------------------- |
+| fix: [comment]      | Patch Release         |
+| feat: [comment]     | Minor Feature Release |
+| perf: [comment]     | Major Feature Release |
+| doc: [comment]      | No Release            |
+| refactor: [comment] | No Release            |
+| chore: [comment]    | No Release            |
