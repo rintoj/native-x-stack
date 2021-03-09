@@ -96,7 +96,7 @@ export const Stack = memo((props: StackProps) => {
 
   const directionStyle = useMemo(() => (horizontal ? [s.flexRow] : []), [horizontal])
   const fillStyle = useMemo(
-    () => (fill ? [s.flex, s.w100, s.h100] : fillHorizontal ? [s.flexRow, s.w100] : []),
+    () => (fill ? [s.flex, s.w100, s.h100] : fillHorizontal ? [s.w100] : []),
     [fill, fillHorizontal],
   )
 
