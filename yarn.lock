@@ -5704,13 +5704,6 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-native-x-theme@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/native-x-theme/-/native-x-theme-1.0.2.tgz#ce26245c0de9cd4719c8c3f72f3bc02c18b70340"
-  integrity sha512-6NXb9X8+4kPi/CB6ulpcGShqHq4b7Lr8ZW1uzDP3XbYc2wnNawLOj6PEfoIoj3fonaWGtRbyL7Tt9xRE2W/BXA==
-  dependencies:
-    tachyons-react-native "^1.0.4"
-
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"

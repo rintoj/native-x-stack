@@ -14,8 +14,10 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "native-x-theme": "^1.0.9",
     "tachyons-react-native": "^1.0.4"
+  },
+  "peerDependencies": {
+    "native-x-theme": "^1.0.9"
   },
   "devDependencies": {
     "@types/react-native": "^0.63.46",
