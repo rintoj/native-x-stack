@@ -17,7 +17,7 @@
     "tachyons-react-native": "^1.0.4"
   },
   "peerDependencies": {
-    "native-x-theme": "^1.0.9"
+    "native-x-theme": "*"
   },
   "devDependencies": {
     "@types/react-native": "^0.63.46",
