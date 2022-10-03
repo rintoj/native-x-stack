@@ -3,22 +3,35 @@ import React, { memo, ReactNode, useMemo } from 'react'
 import { LayoutChangeEvent, View, ViewStyle } from 'react-native'
 import { styles as s } from 'tachyons-react-native'
 
+export enum HAlign {
+  LEFT = 'left',
+  CENTER = 'center',
+  RIGHT = 'right',
+}
+
+export enum VAlign {
+  TOP = 'top',
+  MIDDLE = 'middle',
+  BOTTOM = 'bottom',
+}
+
+export enum Overflow {
+  VISIBLE = 'visible',
+  HIDDEN = 'hidden',
+}
+
 export interface StackProps extends ContainerStyleProps {
-  alignLeft?: boolean
-  alignCenter?: boolean
-  alignRight?: boolean
-  alignTop?: boolean
-  alignMiddle?: boolean
-  alignBottom?: boolean
+  hAlign?: HAlign
+  vAlign?: VAlign
   justifyAround?: boolean
   justifyBetween?: boolean
   reverse?: boolean
   children?: ReactNode | ReactNode[]
   horizontal?: boolean
-  fill?: boolean
-  fillHorizontal?: boolean
+  fill?: boolean | number
   wrap?: boolean
   zIndex?: number
+  spacing?: number
   width?: number
   height?: number
   minWidth?: number
@@ -26,41 +39,31 @@ export interface StackProps extends ContainerStyleProps {
   maxWidth?: number
   maxHeight?: number
   onLayout?: (event: LayoutChangeEvent) => void
-  overflowVisible?: boolean
+  overflow?: Overflow
   style?: ViewStyle
 }
 
-function calculateHorizontalAlignment({
-  alignLeft,
-  alignRight,
-  alignCenter,
-  horizontal,
-}: StackProps) {
-  if (alignLeft === true) {
+function calculateHorizontalAlignment({ hAlign, horizontal }: StackProps) {
+  if (hAlign === HAlign.LEFT) {
     return horizontal ? s.justifyStart : s.itemsStart
   }
-  if (alignCenter !== false) {
+  if (hAlign === HAlign.CENTER) {
     return horizontal ? s.justifyCenter : s.itemsCenter
   }
-  if (alignRight === true) {
+  if (hAlign === HAlign.RIGHT) {
     return horizontal ? s.justifyEnd : s.itemsEnd
   }
   return null
 }
 
-function calculateVerticalAlignment({
-  alignTop,
-  alignBottom,
-  alignMiddle,
-  horizontal,
-}: StackProps) {
-  if (alignTop === true) {
+function calculateVerticalAlignment({ vAlign, horizontal }: StackProps) {
+  if (vAlign === VAlign.TOP) {
     return horizontal ? s.itemsStart : s.justifyStart
   }
-  if (alignMiddle !== false) {
+  if (vAlign === VAlign.MIDDLE) {
     return horizontal ? s.itemsCenter : s.justifyCenter
   }
-  if (alignBottom === true) {
+  if (vAlign === VAlign.BOTTOM) {
     return horizontal ? s.itemsEnd : s.justifyEnd
   }
   return null
@@ -68,12 +71,8 @@ function calculateVerticalAlignment({
 
 export const Stack = memo((props: StackProps) => {
   const {
-    alignLeft = false,
-    alignCenter = false,
-    alignRight = false,
-    alignTop = false,
-    alignMiddle = false,
-    alignBottom = false,
+    hAlign,
+    vAlign,
     wrap = false,
     reverse = false,
     width,
@@ -87,25 +86,21 @@ export const Stack = memo((props: StackProps) => {
     children,
     horizontal = false,
     fill,
-    fillHorizontal,
     zIndex,
+    spacing,
     onLayout,
-    overflowVisible = false,
+    overflow = Overflow.VISIBLE,
     style,
   } = props
-
-  const directionStyle = useMemo(() => (horizontal ? [s.flexRow] : []), [horizontal])
-  const fillStyle = useMemo(
-    () => (fill ? [s.flex, s.w100, s.h100] : fillHorizontal ? [s.w100] : []),
-    [fill, fillHorizontal],
-  )
-
   const styles = useContainerStyle(props)
+  const flexStyles = useMemo(() => {
+    if (fill === undefined) return null
+    return { flex: fill === true ? 1 : fill, width: width ?? '100%', height: height ?? '100%' }
+  }, [fill, width, height])
   const containerStyle = useMemo(
     () =>
       [
-        ...directionStyle,
-        ...fillStyle,
+        horizontal ? s.flexRow : s.flexColumn,
         zIndex != null ? { zIndex } : undefined,
         width != null ? { width } : undefined,
         height != null ? { height } : undefined,
@@ -113,19 +108,19 @@ export const Stack = memo((props: StackProps) => {
         minHeight != null ? { minHeight } : undefined,
         maxWidth != null ? { maxWidth } : undefined,
         maxHeight != null ? { maxHeight } : undefined,
-        reverse ? [horizontal ? s.flexRowReverse : s.flexColumnReverse] : undefined,
-        calculateHorizontalAlignment({ alignLeft, alignRight, alignCenter, horizontal }),
-        calculateVerticalAlignment({ alignTop, alignBottom, alignMiddle, horizontal }),
+        overflow === Overflow.HIDDEN ? s.overflowHidden : null,
         justifyAround ? s.justifyAround : null,
-        wrap ? s.flexWrap : null,
         justifyBetween ? s.justifyBetween : null,
-        overflowVisible ? s.overflowVisible : s.overflowHidden,
+        calculateHorizontalAlignment({ hAlign, horizontal }),
+        calculateVerticalAlignment({ vAlign, horizontal }),
+        reverse ? [horizontal ? s.flexRowReverse : s.flexColumnReverse] : undefined,
+        wrap ? s.flexWrap : null,
+        flexStyles,
         ...styles,
         style,
       ].filter(i => i != null) as ViewStyle,
     [
-      directionStyle,
-      fillStyle,
+      horizontal,
       zIndex,
       width,
       height,
@@ -134,25 +129,33 @@ export const Stack = memo((props: StackProps) => {
       maxWidth,
       maxHeight,
       reverse,
-      horizontal,
-      alignLeft,
-      alignRight,
-      alignCenter,
-      alignTop,
-      alignBottom,
-      alignMiddle,
-      justifyAround,
+      hAlign,
+      vAlign,
       wrap,
+      justifyAround,
       justifyBetween,
-      overflowVisible,
+      overflow,
+      flexStyles,
       styles,
       style,
     ],
   )
 
+  if (spacing === undefined) {
+    return (
+      <View style={containerStyle} onLayout={onLayout}>
+        {children}
+      </View>
+    )
+  }
   return (
     <View style={containerStyle} onLayout={onLayout}>
-      {children}
+      {React.Children.map(children, (child, index) => (
+        <React.Fragment key={index}>
+          {index !== 0 ? <View style={{ padding: spacing }} /> : null}
+          {child}
+        </React.Fragment>
+      ))}
     </View>
   )
 })

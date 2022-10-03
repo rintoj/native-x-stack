@@ -32,32 +32,27 @@ function MyComponent() {
 
 ## API
 
-| Property                                      | Default Value | Usage                                                |
-| --------------------------------------------- | ------------- | ---------------------------------------------------- |
-| alignLeft?: boolean                           | false         | Align left horizontally                              |
-| alignCenter?: boolean                         | false         | Align center horizontally                            |
-| alignRight?: boolean                          | false         | Align right horizontally                             |
-| alignTop?: boolean                            | false         | Align top vertically                                 |
-| alignMiddle?: boolean                         | false         | Align middle vertically                              |
-| alignBottom?: boolean                         | false         | Align bottom vertically                              |
-| justifyAround?: boolean                       | false         | Justify around items in the stack                    |
-| justifyBetween?: boolean                      | false         | Move items towards the corner of the stack           |
-| reverse?: boolean                             | false         | Reverse the direction of flex                        |
-| stack?: ReactNode[]                           |               | Content of stack                                     |
-| horizontal?: boolean                          | false         | Stack items horizontally if true                     |
-| fill?: boolean                                | false         | Fill parent container                                |
-| fillHorizontal?: boolean                      | false         | Take the width of the container horizontally         |
-| wrap?: boolean                                | false         | Wrap content once reached the end of the current row |
-| zIndex?: number                               |               | Z-Index ordering                                     |
-| width?: number                                |               | Width of the stack                                   |
-| height?: number                               |               | Height of the stack                                  |
-| minWidth?: number                             |               | Min width of the stack                               |
-| minHeight?: number                            |               | Min height of the stack                              |
-| maxWidth?: number                             |               | Max width of the stack                               |
-| maxHeight?: number                            |               | Max height of the stack                              |
-| overflowVisible?: boolean                     | false         | Make content visible beyond content borders          |
-| onLayout?: (event: LayoutChangeEvent) => void | false         | Callback handler for layout changes                  |
-| style: ViewStyle                              |               | Additional style                                     |
+| Property                                      | Default Value | Usage                                                                  |
+| --------------------------------------------- | ------------- | ---------------------------------------------------------------------- |
+| hAlign?: HAlign                               |               | Horizontal alignment: HAlign.{LEFT, CENTER, RIGHT}                     |
+| vAlign?: VAlign                               |               | Vertical alignment: HAlign.{TOP, MIDDLE, BOTTOM}                       |
+| justifyAround?: boolean                       | false         | Justify around items in the stack                                      |
+| justifyBetween?: boolean                      | false         | Move items towards the corner of the stack                             |
+| reverse?: boolean                             | false         | Reverse the direction of flex                                          |
+| horizontal?: boolean                          | false         | Stack items horizontally if true                                       |
+| fill?: boolean                                | number        | Fill parent or set style to { flex: ${fill} }                          |
+| wrap?: boolean                                | false         | Wrap content once reached the end of the current row                   |
+| zIndex?: number                               |               | Z-Index ordering                                                       |
+| width?: number                                |               | Width of the stack                                                     |
+| height?: number                               |               | Height of the stack                                                    |
+| minWidth?: number                             |               | Min width of the stack                                                 |
+| minHeight?: number                            |               | Min height of the stack                                                |
+| maxWidth?: number                             |               | Max width of the stack                                                 |
+| maxHeight?: number                            |               | Max height of the stack                                                |
+| spacing?: number                              |               | Spacing between items                                                  |
+| overflow?: Overflow                           |               | Make content visible beyond content borders, Overflow.{VISIBLE,HIDDEN} |
+| onLayout?: (event: LayoutChangeEvent) => void | false         | Callback handler for layout changes                                    |
+| style: ViewStyle                              |               | Additional style                                                       |
 
 ## Automatic Release
 
